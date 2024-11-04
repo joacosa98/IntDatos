@@ -56,7 +56,8 @@ async function obtenerProductosPorNombre(nombreSuper, nombre) {
 
     for (const key of keys) {
       const producto = await redis.hgetall(key);
-      productos.push({ ...producto, id: key.split(":")[1], nombreSuper });
+      if (producto.nombreSuper === nombreSuper)
+        productos.push({ ...producto, id: key.split(":")[1], nombreSuper });
     }
   } while (cursor !== "0"); // Continuar hasta que el cursor sea 0
 
