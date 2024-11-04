@@ -5,7 +5,14 @@ const { fuzzySearchProducts } = require("../parser");
 const redis = new Redis();
 
 // Función para agregar productos
-async function agregarProducto(id, nombre, precio, imagenUrl, nombreSuper) {
+async function agregarProducto(
+  id,
+  nombre,
+  precio,
+  imagenUrl,
+  fecha,
+  nombreSuper
+) {
   await redis.hset(
     `producto:${id}`,
     "nombre",
@@ -14,6 +21,8 @@ async function agregarProducto(id, nombre, precio, imagenUrl, nombreSuper) {
     precio,
     "imagenUrl",
     imagenUrl,
+    "fecha",
+    fecha,
     "nombreSuper",
     nombreSuper
   );

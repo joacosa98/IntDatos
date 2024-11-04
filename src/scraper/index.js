@@ -83,6 +83,7 @@ const scrapeAndParseDevoto = async (name) => {
         precio,
         imagenUrl,
         nombresuper,
+        fecha: new Date(),
       });
     }
   );
@@ -143,47 +144,12 @@ const scrapeAndParseTata = async (name) => {
       precio,
       imagenUrl,
       nombresuper: "tata",
+      fecha: new Date(),
     });
   });
 
   return productos;
 };
-
-// const scrapeAndParseDevoto = async (name) => {
-//   const productos = [];
-
-//   const response = await scrape(`https://www.devoto.com.uy/${name}?page=${1}`);
-
-//   const $ = cheerio.load(response);
-
-//   $('script[type="application/ld+json"]').each((i, elem) => {
-//     const jsonContent = JSON.parse($(elem).html());
-
-//     // Verifica si es un listado de productos
-//     if (
-//       jsonContent["@type"] === "ItemList" &&
-//       Array.isArray(jsonContent.itemListElement) &&
-//       i !== 1
-//     ) {
-//       jsonContent.itemListElement.forEach((product) => {
-//         const item = product.item;
-//         const id = crypto.createHash("sha1").update(item.name).digest("hex");
-//         const nombre = item.name;
-//         const precio = item.offers.lowPrice;
-//         const imagenUrl = item.image;
-//         productos.push({
-//           id,
-//           nombre,
-//           precio,
-//           imagenUrl,
-//           nombreSuper: "devoto",
-//         });
-//       });
-//     }
-//   });
-
-//   return productos;
-// };
 
 const scrapeAndParseDisco = async (name) => {
   const productos = [];
@@ -243,44 +209,13 @@ const scrapeAndParseDisco = async (name) => {
         precio,
         imagenUrl,
         nombresuper,
+        fecha: new Date(),
       });
     }
   );
 
   return productos;
 };
-
-// const scrapeAndParseDisco = async (name) => {
-//   const productos = [];
-//   console.log("name", name);
-//   const response = await scrape(
-//     `https://www.disco.com.uy/${encodeURIComponent(name)}`
-//   );
-
-//   const $ = cheerio.load(response);
-
-//   return response;
-
-//   $("#gallery-layout-container").each((i, elem) => {
-//     console.log("i", i);
-//     const nombre = $(elem)
-//       .find(".vtex-product-summary-2-x-productBrandName")
-//       .text()
-//       .trim();
-//     const precio = $(elem)
-//       .find(".devotouy-products-components-0-x-sellingPrice")
-//       .text()
-//       .trim();
-//     const imagenUrl = $(elem)
-//       .find(".vtex-product-summary-2-x-imageNormal")
-//       .attr("src");
-
-//     const id = crypto.createHash("sha1").update(item.name).digest("hex");
-//     productos.push({ id, nombre, precio, imagenUrl, nombresuper: "disco" });
-//   });
-
-//   return productos;
-// };
 
 const scrapeAndParseGeant = async (name) => {
   const productos = [];
@@ -340,45 +275,13 @@ const scrapeAndParseGeant = async (name) => {
         precio,
         imagenUrl,
         nombresuper,
+        fecha: new Date(),
       });
     }
   );
 
   return productos;
 };
-
-// const scrapeAndParseGeant = async (name) => {
-//   const productos = [];
-
-//   const response = await scrape(
-//     `https://www.geant.com.uy/${encodeURIComponent(name)}`
-//   );
-
-//   const $ = cheerio.load(response);
-
-//   $('script[type="application/ld+json"]').each((i, elem) => {
-//     const jsonContent = JSON.parse($(elem).html());
-
-//     // Verifica si es un listado de productos
-//     if (
-//       jsonContent["@type"] === "ItemList" &&
-//       Array.isArray(jsonContent.itemListElement) &&
-//       i !== 1
-//     ) {
-//       jsonContent.itemListElement.forEach((product) => {
-//         const item = product.item;
-//         const nombre = item.name;
-//         const precio = item.offers.lowPrice;
-//         const imagenUrl = item.image;
-//         const id = crypto.createHash("sha1").update(item.name).digest("hex");
-
-//         productos.push({ id, nombre, precio, imagenUrl, nombreSuper: "geant" });
-//       });
-//     }
-//   });
-
-//   return productos;
-// };
 
 const getProductos = async (nombre) => {
   let productosDevoto = await obtenerProductosPorNombre("devoto", nombre);
@@ -390,10 +293,6 @@ const getProductos = async (nombre) => {
     const productosDevotoScrate = await scrapeAndParseDevoto(nombre);
 
     productosDevoto = fuzzySearchProducts(nombre, productosDevotoScrate);
-    console.log(
-      "fuzzyproductosDevotoScrate",
-      fuzzySearchProducts(nombre, productosDevotoScrate)
-    );
 
     await Promise.all(
       productosDevoto.map((producto) =>
@@ -402,6 +301,7 @@ const getProductos = async (nombre) => {
           producto.nombre,
           producto.precio,
           producto.imagenUrl,
+          producto.fecha,
           "devoto"
         )
       )
@@ -420,6 +320,7 @@ const getProductos = async (nombre) => {
           producto.nombre,
           producto.precio,
           producto.imagenUrl,
+          producto.fecha,
           "geant"
         )
       )
@@ -438,6 +339,7 @@ const getProductos = async (nombre) => {
           producto.nombre,
           producto.precio,
           producto.imagenUrl,
+          producto.fecha,
           "disco"
         )
       )
@@ -456,6 +358,7 @@ const getProductos = async (nombre) => {
           producto.nombre,
           producto.precio,
           producto.imagenUrl,
+          producto.fecha,
           "tata"
         )
       )
