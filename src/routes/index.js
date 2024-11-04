@@ -6,6 +6,11 @@ const router = express.Router();
 router.get("/", async (req, res) => {
   const name = req.query.name;
 
+  if (!name) {
+    res.json({ productos: [] });
+    return;
+  }
+
   const productos = await getProductos(name);
 
   res.json({ productos });

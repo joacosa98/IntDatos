@@ -67,7 +67,7 @@ const scrapeAndParseDevoto = async (name) => {
       const precio = $(elem)
         .find(".devotouy-products-components-0-x-sellingPrice")
         .text()
-        .split("$")[1]
+        .replace("$", "")
         .trim();
       const imagenUrl = $(elem)
         .find(".vtex-product-summary-2-x-imageNormal")
@@ -132,7 +132,7 @@ const scrapeAndParseTata = async (name) => {
     const precio = $(elem)
       .find(".price-module--fs-price--9b997")
       .text()
-      .split("$")[1]
+      .replace("$", "")
       .trim();
     const id = crypto
       .createHash("sha1")
@@ -193,7 +193,7 @@ const scrapeAndParseDisco = async (name) => {
       const precio = $(elem)
         .find(".devotouy-products-components-0-x-sellingPrice")
         .text()
-        .split("$")[1]
+        .replace("$", "")
         .trim();
       const imagenUrl = $(elem)
         .find(".vtex-product-summary-2-x-imageNormal")
@@ -259,7 +259,7 @@ const scrapeAndParseGeant = async (name) => {
       const precio = $(elem)
         .find(".devotouy-products-components-0-x-sellingPrice")
         .text()
-        .split("$")[1]
+        .replace("$", "")
         .trim();
       const imagenUrl = $(elem)
         .find(".vtex-product-summary-2-x-imageNormal")
