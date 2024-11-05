@@ -130,7 +130,7 @@ const scrapeAndParseTata = async (name) => {
       .find(".link-module--fs-link--5aae5 img")
       .attr("src");
     const precio = $(elem)
-      .find(".price-module--fs-price--9b997")
+      .find(".price-module--fs-price--9b997.text__body")
       .text()
       .replace("$", "")
       .trim();
