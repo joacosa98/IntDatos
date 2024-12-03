@@ -11,19 +11,19 @@ function fuzzySearchProducts(searchTerm, products, threshold = 0.6, limit = 5) {
     limit,
   };
 
-  const splitSearchTerm = searchTerm.split(" ");
-  const preFilteredProducts = products.filter((product) => {
-    const productName = product.nombre;
+  //const splitSearchTerm = searchTerm.split(" ");
+  // const preFilteredProducts = products.filter((product) => {
+  //   const productName = product.nombre;
 
-    return splitSearchTerm.every((term) => {
-      let regex = "\\b";
-      regex += escapeRegExp(term);
-      regex += "\\b";
-      return new RegExp(regex, "i").test(productName);
-    });
-  });
+  //   return splitSearchTerm.every((term) => {
+  //     let regex = "\\b";
+  //     regex += escapeRegExp(term);
+  //     regex += "\\b";
+  //     return new RegExp(regex, "i").test(productName);
+  //   });
+  // });
 
-  const fuse = new Fuse(preFilteredProducts, options);
+  const fuse = new Fuse(products, options);
   const results = fuse.search(searchTerm);
 
   // Devuelve solo los elementos encontrados
